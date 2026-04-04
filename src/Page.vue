@@ -1,8 +1,23 @@
 <script setup lang="ts">
-	const now:Date = new Date();
+	import {ref, onMounted, onUnmounted} from 'vue';
+	const now = ref('');
+	let intervalId:ReturnType<typeof setInterval>;
+
+	function update () {
+		now.value = (new Date()).toISOString()
+	}
+
+	onMounted(() => {
+		update();
+		intervalId = setInterval(update, 1000);
+	});
+
+	onUnmounted(() => {
+		if (intervalId) clearInterval(intervalId);
+	})
 </script>
 
 <template>
 	<h2>Hello from Vue with SSR</h2>
-	<h3>{{ now.toISOString() }}</h3>
+	<h3>{{ now }}</h3>
 </template>

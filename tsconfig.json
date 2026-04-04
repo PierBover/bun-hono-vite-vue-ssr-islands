@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vite/client", "bun-types"],
     // Environment setup & latest features
     "lib": ["ESNext"],
     "target": "ESNext",
