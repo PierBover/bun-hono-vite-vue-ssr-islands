@@ -6,5 +6,6 @@
 
 <template>
 	<h2>Hello from Vue with SSR</h2>
+	<!--<Island :component='CurrentTime' :islandProps='{serverTime}' clientOnly/>-->
 	<Island :component='CurrentTime' :islandProps='{serverTime}'/>
 </template>

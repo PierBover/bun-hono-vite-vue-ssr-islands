@@ -1,22 +1,28 @@
 /// <reference lib='dom' />
 
-import { createSSRApp, defineAsyncComponent } from 'vue';
+import { createSSRApp, defineAsyncComponent, createApp } from 'vue';
+import * as devalue from 'devalue';
 
 const modules = import.meta.glob('./islands/*.vue');
 
 const hydrate = async () => {
-	const targets = document.querySelectorAll('[data-island]');
+	const elements = document.querySelectorAll('[data-island]');
 
-	for (const element of targets) {
-		const name = element.getAttribute('data-island');
-		const props = JSON.parse(element.getAttribute('data-props') || '{}');
+	for (const element of elements) {
+		const componentName = element.getAttribute('data-island');
+		const props = devalue.parse(element.getAttribute('data-props') || '{}');
 
-		const importFn = modules[`./islands/${name}.vue`];
+		const importFunction = modules[`./islands/${componentName}.vue`];
 
-		if (importFn) {
-			const Component = defineAsyncComponent(importFn as any);
-			const app = createSSRApp(Component, props);
-			app.mount(element);
+		if (importFunction) {
+			const clientOnly = element.getAttribute('data-client-only') === 'true';
+			const Component = defineAsyncComponent(importFunction as any);
+
+			if (clientOnly) {
+				createApp(Component, props).mount(element);
+			} else {
+				createSSRApp(Component, props).mount(element);
+			}
 		}
 	}
 };

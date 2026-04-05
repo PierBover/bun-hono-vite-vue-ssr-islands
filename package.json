@@ -18,6 +18,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "devalue": "^5.6.4",
     "hono": "^4.12.10",
     "vue": "^3.5.32"
   }
