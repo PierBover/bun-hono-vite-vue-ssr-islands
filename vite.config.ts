@@ -17,7 +17,7 @@ export default defineConfig(({ isSsrBuild }) => {
 		},
 		build: {
 			rollupOptions: {
-				input: isSsrBuild ? 'src/index.ts' : 'src/client.ts',
+				input: isSsrBuild ? 'src/index.ts' : 'src/islands-entry.ts',
 				external: ['bun'],
 			},
 			outDir: isSsrBuild ? 'dist/server' : 'dist/client',

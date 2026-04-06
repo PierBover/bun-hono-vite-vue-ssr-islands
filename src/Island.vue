@@ -11,15 +11,16 @@
 
 	const props = withDefaults(defineProps<{
 		component: T;
-		islandProps: InferProps<T>;
-		clientOnly?:boolean;
-	}>(), {clientOnly:false});
+		islandProps?: InferProps<T>|null;
+		clientOnly?:boolean|null;
+		hydrateOnVisible?:boolean|null;
+	}>(), {islandProps:null, clientOnly:null, hydrateOnVisible: null});
 
 	const comp = props.component as any;
 	const componentName = comp.__name || comp.name;
-	const jsonProps = devalue.stringify(props.islandProps);
+	const jsonProps = props.islandProps ? devalue.stringify(props.islandProps) : null;
 </script>
 
 <template>
-	<div :data-island="componentName" :data-props="jsonProps" :data-client-only="clientOnly"><component v-if="!clientOnly" :is="component" v-bind="(islandProps as any)" /></div>
+	<div :data-island="componentName" :data-props="jsonProps" :data-client-only="clientOnly" :data-hydrate-on-visible="hydrateOnVisible"><component v-if="!clientOnly" :is="component" v-bind="(islandProps as any)" /></div>
 </template>

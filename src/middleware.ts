@@ -10,13 +10,13 @@ const isProd = import.meta.env.PROD;
 const viteManifest = isProd ? await file('dist/client/.vite/manifest.json').text() : null;
 const viteManifestJson = viteManifest ? JSON.parse(viteManifest) : null;
 
-function getClientEntry () {
+function getIslandsEntry () {
 	// during dev just return the actual file and Vite will do the rest
-	if (isDev) return '<script type="module" src="src/client.ts"></script>';
+	if (isDev) return '<script type="module" src="src/islands-entry.ts"></script>';
 
 	// after building get the hashed path from the manifest
 	if (!viteManifestJson) throw 'No Vite manifest found!';
-	return `<script type="module" src="${viteManifestJson['src/client.ts'].file}"></script>`
+	return `<script type="module" src="${viteManifestJson['src/islands-entry.ts'].file}"></script>`
 }
 
 function getPreloadHeaders () {
@@ -32,6 +32,8 @@ export const renderVuePage = createMiddleware(async (c, next) => {
 		const vueApp = createSSRApp(Component, props);
 		const vueHtml = await renderToString(vueApp);
 
+		const hasIslands = vueHtml.includes('data-island');
+
 		return c.html(html`
 			<!DOCTYPE html>
 			<html>
@@ -41,7 +43,7 @@ export const renderVuePage = createMiddleware(async (c, next) => {
 				</head>
 				<body>
 					<div id="vue">${raw(vueHtml)}</div>
-					${raw(getClientEntry())}
+					${hasIslands ? raw(getIslandsEntry()) : ''}
 				</body>
 			</html>
 		`);
