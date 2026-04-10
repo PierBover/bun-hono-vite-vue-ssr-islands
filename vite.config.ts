@@ -16,8 +16,9 @@ export default defineConfig(({ isSsrBuild }) => {
 			exclude: ['bun'],
 		},
 		build: {
+			cssCodeSplit: false,
 			rollupOptions: {
-				input: isSsrBuild ? 'src/index.ts' : 'src/islands-entry.ts',
+				input: isSsrBuild ? 'src/index.ts' : ['src/islands-entry.ts', 'src/styles-entry.ts'],
 				external: ['bun'],
 			},
 			outDir: isSsrBuild ? 'dist/server' : 'dist/client',

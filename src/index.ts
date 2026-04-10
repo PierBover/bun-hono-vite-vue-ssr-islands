@@ -3,6 +3,7 @@ import {compress} from 'hono/compress';
 import {serveStatic} from 'hono/bun';
 import Page from './Page.vue';
 import {renderVuePage} from './middleware';
+import './styles-entry';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;

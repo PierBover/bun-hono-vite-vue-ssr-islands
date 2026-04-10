@@ -22,3 +22,9 @@
 <template>
 	<h3>The time is:{{ now }}</h3>
 </template>
+
+<style>
+	h3 {
+		font-weight: normal;
+	}
+</style>

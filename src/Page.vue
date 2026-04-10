@@ -13,3 +13,10 @@
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<Island :component='Counter' hydrateOnVisible/>
 </template>
+
+<style>
+	h2 {
+		font-weight: normal;
+		color: #42b883;
+	}
+</style>
